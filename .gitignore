@@ -1,5 +1,6 @@
 # build artefacts
 lib/
+engines/
 
 # npm
 node_modules/

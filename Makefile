@@ -7,6 +7,7 @@ install: ./node_modules/
 
 build: clean
 	$(BIN)/babel ./src --out-dir ./lib
+	mv -f ./lib/engines ./
 
 clean:
 	rm -rf ./lib/
