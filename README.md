@@ -3,7 +3,7 @@ redux-storage
 
 ## Installation
 
-    npm install --save redux-promise
+    npm install --save redux-storage
 
 ## Usage
 
