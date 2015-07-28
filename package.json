@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "make test",
-    "prepublish": "make build"
+    "prepublish": "make build lint"
   },
   "repository": {
     "type": "git",
