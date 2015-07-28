@@ -1,6 +1,8 @@
 redux-storage
 =============
 
+[![npm version](https://img.shields.io/npm/v/redux-storage.svg?style=flat-square)](https://www.npmjs.com/package/redux-storage)
+
 ## Installation
 
     npm install --save redux-storage
