@@ -1,0 +1,6 @@
+{
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "indent": [2, 4]
+  }
+}

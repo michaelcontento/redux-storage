@@ -1,0 +1,45 @@
+{
+  "name": "redux-storage",
+  "version": "0.0.1",
+  "description": "Persistence layer for redux with flexible backends",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "make test",
+    "prepublish": "make build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaelcontento/redux-storage.git"
+  },
+  "homepage": "https://github.com/michaelcontento/redux-storage",
+  "keywords": [
+    "redux",
+    "react-native",
+    "promise",
+    "middleware",
+    "redux-middleware",
+    "fsa",
+    "flux"
+  ],
+  "author": "Michael Contento <michaelcontento@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lodash": "3.10.x",
+    "babel": "^5.8.12",
+    "babel-core": "^5.8.14",
+    "babel-eslint": "^4.0.5",
+    "chai": "^3.2.0",
+    "chai-as-promised": "^5.1.0",
+    "eslint": "^0.24.1",
+    "eslint-config-airbnb": "0.0.6",
+    "mocha": "^2.2.5",
+    "sinon": "^1.15.4"
+  },
+  "dependencies": {
+    "redux-actions": "0.7.x"
+  },
+  "peerDependencies": {
+    "redux": "^1.0.0 || 1.0.0-alpha || 1.0.0-rc",
+    "react-native": ">=0.7.0"
+  }
+}
