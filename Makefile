@@ -10,7 +10,8 @@ build: clean
 	mv -f ./lib/engines ./
 
 clean:
-	rm -rf ./lib/
+	rm -rf ./lib
+	rm -rf ./engines
 
 lint:
 	$(BIN)/eslint src
