@@ -13,9 +13,18 @@ redux-storage
 import storage from 'redux-storage'
 import createEngine from 'redux-storage/engines/reactNativeAsyncStorage';
 
+// You should know how to gather your reducers, as this part is plain redux :)
+import { createStore, applyMiddleware } from 'redux';
+import * as reducers from './reducers';
+
+// Inject the storage reducer as first reducer in the whole chain/stack, as this
+// will be the point where the loaded state will be "injected"
+const reducer = storage.reducer(combineReducers(reducers));
+
+// The middleware is required to detect changes and issue the save operations
 const storageMiddleware = storage.middleware(createEngine('redux'));
 
-import { createStore, applyMiddleware } from 'redux';
+// Straight forward redux store creation ...
 const store = applyMiddleware(storageMiddleware)(createStore)(reducer);
 ```
 
