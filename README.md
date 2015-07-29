@@ -37,10 +37,10 @@ not expose a async API and every save/load operation will block the JS thread!
 ```js
 import { LOAD, SAVE } from 'redux-storage';
 
-function storeAwareReducer(state = { loaded: false }, action) {
+function storeageAwareReducer(state = { loaded: false }, action) {
     switch (action.type) {
         case LOAD:
-            return { ...state, laoded: true };
+            return { ...state, loaded: true };
 
         case SAVE:
             console.log('Something has changed and written to disk!');
