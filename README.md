@@ -36,7 +36,7 @@ const store = applyMiddleware(storageMiddleware)(createStore)(reducer);
 
 This will use `AsyncStorage` out of `react-native`.
 
-#### `redux-storage/engiens/localStorage`
+#### `redux-storage/engines/localStorage`
 
 Stores everything inside `window.localStorage`. **Warning!** `localStorage` does
 not expose a async API and every save/load operation will block the JS thread!
