@@ -1,19 +1,38 @@
 import _ from 'lodash';
 
-export default function(whitelist = []) {
-    function select(state) {
-        let saveState = {};
-        whitelist.forEach((copyPath) => {
-            const value = _.property(copyPath)(state);
-            if (value !== undefined) {
-                _.set(saveState, copyPath, value);
-            }
-        });
-        return saveState;
-    }
+export default function(engine, whitelist = []) {
+    return {
+        load() {
+            return engine.load();
+        },
 
-    return (middleware) => ({ dispatch, getState }) => {
-        const getStateSelect = () => select(getState());
-        return middleware({ dispatch, getState: getStateSelect });
+        save(state) {
+            let saveState = {};
+
+            whitelist.forEach((key) => {
+                let value = state;
+
+                for (let keyPart of key) {
+                    // Support immutable structures
+                    if (_.isFunction(value.has) && _.isFunction(value.get)) {
+                        if (!value.has(keyPart)) {
+                            // No value stored - continue whiteliste.forEach!
+                            return;
+                        }
+
+                        value = value.get(keyPart);
+                    } else if (value[keyPart]) {
+                        value = value[keyPart];
+                    } else {
+                        // No value stored - continue whiteliste.forEach!
+                        return;
+                    }
+                }
+
+                _.set(saveState, key, value);
+            });
+
+            return engine.save(saveState);
+        }
     };
 }

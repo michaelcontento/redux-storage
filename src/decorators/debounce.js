@@ -1,16 +1,26 @@
-function noop() {}
+export default function(engine, ms) {
+    let lastTimeout;
+    let lastReject;
 
-export default function(ms) {
-    let currentTimeout;
+    return {
+        load() {
+            return engine.load();
+        },
 
-    return (middleware) => (store) => {
-        const unwrapped = middleware(store)(noop);
+        save(state) {
+            clearTimeout(lastTimeout);
+            if (lastReject) {
+                lastReject();
+                lastReject = null;
+            }
 
-        return (next) => (action) => {
-            next(action);
-
-            clearTimeout(currentTimeout);
-            currentTimeout = setTimeout(() => unwrapped(action), ms);
-        };
+            return new Promise((resolve, reject) => {
+                lastReject = reject;
+                lastTimeout = setTimeout(() => {
+                    lastReject = null;
+                    engine.save(state).then(resolve);
+                }, ms);
+            });
+        }
     };
 }

@@ -21,11 +21,20 @@ import * as reducers from './reducers';
 // will be the point where the loaded state will be "injected"
 const reducer = storage.reducer(combineReducers(reducers));
 
-// The middleware is required to detect changes and issue the save operations
-const storageMiddleware = storage.middleware(createEngine('redux'));
+// Now we need a engine that does the real load/save operation
+let engine = createEngine('my-save-key');
 
-// Straight forward redux store creation ...
-const store = applyMiddleware(storageMiddleware)(createStore)(reducer);
+// The middleware is required to detect changes and issue the save operations
+const middleware = storage.createMiddleware(engine);
+
+// Everything is ready now! Go ahead and use the store as usual, with the
+// added benefit that every action will trigger a save operation :)
+const store = applyMiddleware(middleware)(createStore)(reducer);
+
+// Just create a loader function associated with your engine and you're ready
+// to load the saved state into your store instance
+const load = storage.createLoader(engine);
+load(store);
 ```
 
 ## Details
@@ -67,13 +76,12 @@ function storeageAwareReducer(state = { loaded: false }, action) {
 Use this decorator to write only part of your state tree to disk.
 
 ```js
-
 import storage from 'redux-storage'
 
-storageMiddleware = storage.decorators.filter([
+engine = storage.decorators.filter(engine, [
     ['some', 'key'],
     ['another', 'very', 'nested', 'key']
-])(storageMiddleware);
+]);
 ```
 
 #### Debounce
@@ -84,7 +92,21 @@ new change to the state tree will reset the timeout!
 ```js
 import storage from 'redux-storage'
 
-storageMiddleware = storage.decorators.debounce(1500)(storageMiddleware);
+engine = storage.decorators.debounce(engine, 1500);
+```
+
+#### Immutable
+
+Convert parts of the state tree into [ImmutableJS](https://github.com/facebook/immutable-js)
+objects on `engine.load`.
+
+```js
+import storage from 'redux-storage'
+
+engine = storage.decorators.immutablejs(engine, [
+    ['immutablejs-reducer'],
+    ['plain-object-reducer', 'with-immutablejs-key']
+]);
 ```
 
 ## Todo
