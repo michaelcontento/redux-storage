@@ -44,7 +44,6 @@
     "redux-actions": "0.7.x"
   },
   "peerDependencies": {
-    "redux": "^1.0.0 || 1.0.0-alpha || 1.0.0-rc",
-    "react-native": ">=0.7.0"
+    "redux": "^1.0.0 || 1.0.0-alpha || 1.0.0-rc"
   }
 }
