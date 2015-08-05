@@ -1,13 +1,16 @@
 import { save as actionSave } from './actions';
 import { LOAD, SAVE } from './constants';
 
-export default function(engine) {
+export default function(engine, actionBlacklist = []) {
+    // Also don't save if we process our own actions
+    const actionsToIgnore = [...actionBlacklist, LOAD, SAVE];
+
     return ({ dispatch, getState }) => {
         return (next) => (action) => {
             next(action);
 
-            // Don't save if we process our own actions
-            if (action.type !== SAVE && action.type !== LOAD) {
+
+            if (actionsToIgnore.indexOf(action.type) === -1) {
                 const saveState = getState();
                 const dispatchSave = () => dispatch(actionSave(saveState));
                 engine.save(saveState).then(dispatchSave);

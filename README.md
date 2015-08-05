@@ -69,6 +69,20 @@ function storeageAwareReducer(state = { loaded: false }, action) {
 }
 ```
 
+### Middleware
+
+If you pass an array of action types as second argument to `createMiddleware`,
+those will be added to a internal blacklist and wont trigger calls to
+`engien.save`.
+
+```js
+import storage from 'redux-storage'
+
+import { APP_START } from './constants';
+
+const middleware = storage.createMiddleware(engine, [ APP_START ]);
+```
+
 ### Decorators
 
 #### Filter
