@@ -14,12 +14,17 @@
   "homepage": "https://github.com/michaelcontento/redux-storage",
   "keywords": [
     "redux",
+    "redux-middleware",
     "react-native",
     "promise",
     "middleware",
-    "redux-middleware",
     "fsa",
-    "flux"
+    "flux-standard-action",
+    "flux",
+    "immutable",
+    "persistent",
+    "data",
+    "localstorage"
   ],
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "license": "MIT",
