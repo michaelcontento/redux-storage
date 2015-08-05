@@ -1,4 +1,4 @@
-import { Iterable, fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 
 export default function(engine, whitelist = []) {
     return {

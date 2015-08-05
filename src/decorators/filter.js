@@ -7,12 +7,12 @@ export default function(engine, whitelist = []) {
         },
 
         save(state) {
-            let saveState = {};
+            const saveState = {};
 
             whitelist.forEach((key) => {
                 let value = state;
 
-                for (let keyPart of key) {
+                for (const keyPart of key) {
                     // Support immutable structures
                     if (_.isFunction(value.has) && _.isFunction(value.get)) {
                         if (!value.has(keyPart)) {
