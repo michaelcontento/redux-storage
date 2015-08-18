@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isFunction, set } from 'lodash';
 
 export default function(engine, whitelist = []) {
     return {
@@ -14,7 +14,7 @@ export default function(engine, whitelist = []) {
 
                 for (const keyPart of key) {
                     // Support immutable structures
-                    if (_.isFunction(value.has) && _.isFunction(value.get)) {
+                    if (isFunction(value.has) && isFunction(value.get)) {
                         if (!value.has(keyPart)) {
                             // No value stored - continue whiteliste.forEach!
                             return;
@@ -29,7 +29,7 @@ export default function(engine, whitelist = []) {
                     }
                 }
 
-                _.set(saveState, key, value);
+                set(saveState, key, value);
             });
 
             return engine.save(saveState);
