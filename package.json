@@ -29,7 +29,6 @@
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "lodash": "3.10.x",
     "babel": "^5.8.20",
     "babel-core": "^5.8.20",
     "babel-eslint": "^4.0.5",
@@ -42,6 +41,7 @@
     "sinon": "^1.15.4"
   },
   "dependencies": {
+    "lodash": "3.10.x",
     "redux-actions": "0.7.x"
   },
   "peerDependencies": {
