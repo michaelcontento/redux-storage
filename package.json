@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "lodash": "3.10.x",
+    "immutable": "^3.7.4",
     "redux-actions": "0.7.x"
   },
   "peerDependencies": {
