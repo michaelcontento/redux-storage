@@ -37,6 +37,7 @@
     "chai-as-promised": "^5.1.0",
     "eslint": "^1.0.0",
     "eslint-config-airbnb": "0.0.7",
+    "eslint-plugin-react": "^3.2.3",
     "mocha": "^2.2.5",
     "sinon": "^1.15.4"
   },
