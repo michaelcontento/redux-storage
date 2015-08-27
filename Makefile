@@ -5,7 +5,7 @@ install: ./node_modules/
 ./node_modules:
 	npm install --loglevel=error
 
-build: clean
+build: clean install
 	$(BIN)/babel ./src --out-dir ./lib
 	mv -f ./lib/engines ./
 
@@ -13,7 +13,7 @@ clean:
 	rm -rf ./lib
 	rm -rf ./engines
 
-lint:
+lint: install
 	$(BIN)/eslint src
 
 .PHONY: install build clean lint
