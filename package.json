@@ -43,7 +43,7 @@
   "dependencies": {
     "lodash": "3.10.x",
     "immutable": "^3.7.4",
-    "redux-actions": "0.7.x"
+    "redux-actions": "0.8.x"
   },
   "peerDependencies": {
     "redux": "^1.0.0 || 1.0.0-alpha || 1.0.0-rc"
