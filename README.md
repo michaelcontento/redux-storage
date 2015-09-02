@@ -71,6 +71,12 @@ const store = createStoreWithMiddleware(reducer);
 // have at hand :)
 const load = storage.createLoader(engine);
 load(store);
+
+// Notice that our load function will return a promise that can also be used
+// to respond to the restore event.
+load(store)
+    .then((newState) => console.log('Loaded state:', newState))
+    .catch(() => console.log('Failed to load previous state'));
 ```
 
 ## Details
