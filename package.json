@@ -1,6 +1,6 @@
 {
   "name": "redux-storage",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Persistence layer for redux with flexible backends",
   "main": "lib/index.js",
   "scripts": {
