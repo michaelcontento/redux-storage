@@ -1,1 +1,12 @@
-src
+# keep the npm package as small as possible
+.babelrc
+.editorconfig
+.eslintrc
+Makefile
+**/__tests__/**
+
+# we ship lib/ after `make build`
+src/
+
+# archive created by `npm pack`
+redux-storage-*.tgz
