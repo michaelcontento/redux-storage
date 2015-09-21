@@ -2,6 +2,7 @@
 .babelrc
 .editorconfig
 .eslintrc
+.travis.yml
 Makefile
 **/__tests__/**
 
