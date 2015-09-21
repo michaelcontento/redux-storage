@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/redux-storage.svg?style=flat-square)](https://www.npmjs.com/package/redux-storage)
 [![npm downloads](https://img.shields.io/npm/dm/redux-storage.svg?style=flat-square)](https://www.npmjs.com/package/redux-storage)
 [![Code Climate](https://codeclimate.com/github/michaelcontento/redux-storage/badges/gpa.svg)](https://codeclimate.com/github/michaelcontento/redux-storage)
+[![build](https://travis-ci.org/michaelcontento/redux-storage.svg)](https://travis-ci.org/michaelcontento/redux-storage)
 
 Save and load the [Redux][] state with ease.
 
