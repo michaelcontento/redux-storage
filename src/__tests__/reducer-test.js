@@ -33,4 +33,14 @@ describe('reducer', () => {
 
         spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
     });
+
+    it('should use mergeDeep even if only newState is immutable', () => {
+        const spy = sinon.spy();
+        const oldState = { x: 0, y: 0};
+        const action = { type: LOAD, payload: map({ y: 42 }) };
+
+        reducer(spy)(oldState, action);
+
+        spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
+    });
 });
