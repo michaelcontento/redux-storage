@@ -18,7 +18,7 @@ export default function(engine, ms) {
                 lastReject = reject;
                 lastTimeout = setTimeout(() => {
                     lastReject = null;
-                    engine.save(state).then(resolve);
+                    engine.save(state).then(resolve).catch(reject);
                 }, ms);
             });
         }

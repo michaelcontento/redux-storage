@@ -7,9 +7,8 @@ MOCHA_ARGS = --compilers js:babel/register \
 	--trace-deprecation \
 	--throw-deprecation \
 	--check-leaks \
-	--require ./src/__tests__/init.js \
-	./src/**/*-test.js
-MOCHA_TARGET = src/**/*-test.js
+	--require ./src/__tests__/init.js
+MOCHA_TARGET = "src/**/*-test.js"
 
 #
 # INSTALL
