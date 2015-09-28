@@ -1,4 +1,5 @@
-import { merge, isFunction } from 'lodash';
+import merge from 'lodash.merge';
+import isFunction from 'lodash.isfunction';
 import { fromJS } from 'immutable';
 
 import { LOAD } from './constants';
