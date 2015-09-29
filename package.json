@@ -44,8 +44,10 @@
     "sinon-chai": "2.8.0"
   },
   "dependencies": {
-    "lodash": "3.10.1",
     "immutable": "3.7.5",
+    "lodash.isfunction": "^3.0.6",
+    "lodash.merge": "^3.3.2",
+    "lodash.set": "^3.7.4",
     "redux-actions": "0.8.0"
   },
   "peerDependencies": {

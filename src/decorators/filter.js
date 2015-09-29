@@ -1,4 +1,5 @@
-import { isFunction, set } from 'lodash';
+import set from 'lodash.set';
+import isFunction from 'lodash.isfunction';
 
 export default function(engine, whitelist = []) {
     return {
