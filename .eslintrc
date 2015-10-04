@@ -1,7 +1,7 @@
 {
-  "extends": "eslint-config-airbnb",
-  "rules": {
-    "indent": [2, 4],
-    "comma-dangle": [2, "never"]
-  }
+    "extends": "eslint-config-airbnb",
+    "rules": {
+        "indent": [2, 4],
+        "comma-dangle": [2, "never"]
+    }
 }
