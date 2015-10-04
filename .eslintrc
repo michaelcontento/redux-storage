@@ -2,6 +2,13 @@
     "extends": "eslint-config-airbnb",
     "rules": {
         "indent": [2, 4],
-        "comma-dangle": [2, "never"]
+        "comma-dangle": [2, "never"],
+        "no-unused-expressions": [0]
+    },
+    "env": {
+        "mocha": true
+    },
+    "globals": {
+        "sinon": false
     }
 }
