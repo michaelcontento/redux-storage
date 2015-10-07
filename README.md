@@ -22,7 +22,7 @@ Save and load the [Redux][] state with ease.
     * [debounce][]: batch multiple save operations
     * [filter][]: only store a subset of the whole state tree
     * [immutablejs][]: load parts of the state tree as [Immutable][] objects
-* Blacklist actions from issuing a save operation
+* Black- and whitelist actions from issuing a save operation
 
 ## Installation
 
@@ -145,6 +145,17 @@ import storage from 'redux-storage'
 import { APP_START } from './constants';
 
 const middleware = storage.createMiddleware(engine, [ APP_START ]);
+```
+
+If you want to whitelist all actions that are allowed to issue a `engine.save`,
+just specify them as third argument.
+
+```js
+import storage from 'redux-storage'
+
+import { SHOULD_SAVE } from './constants';
+
+const middleware = storage.createMiddleware(engine, [], [ SHOULD_SAVE ]);
 ```
 
 ### Decorators
