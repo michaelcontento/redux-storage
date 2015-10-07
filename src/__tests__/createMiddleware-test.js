@@ -35,6 +35,60 @@ describe('createMiddleware', () => {
         engine.save.should.not.have.been.called;
     });
 
+    it('should ignore non-whitelisted actions', () => {
+        const engine = { save: sinon.spy() };
+        const store = {};
+        const next = sinon.spy();
+        const action = { type: 'IGNORE_ME' };
+
+        createMiddleware(engine, [], ['ALLOWED'])(store)(next)(action);
+
+        engine.save.should.not.have.been.called;
+    });
+
+    it('should process whitelisted actions', () => {
+        const engine = { save: sinon.stub().resolves() };
+        const store = { getState: sinon.spy() };
+        const next = sinon.spy();
+        const action = { type: 'ALLOWED' };
+
+        createMiddleware(engine, [], ['ALLOWED'])(store)(next)(action);
+
+        engine.save.should.have.been.called;
+    });
+
+    it('should warn about action on both black- and whitelist in non-production envs', () => {
+        const oldEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = 'develop';
+        const spy = sinon.stub(console, 'warn');
+        const engine = {};
+
+        createMiddleware(engine, ['A'], ['A']);
+
+        try {
+            spy.should.have.been.called;
+        } finally {
+            spy.restore();
+            process.env.NODE_ENV = oldEnv;
+        }
+    });
+
+    it('should NOT warn about action on both black- and whitelist in production', () => {
+        const oldEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = 'production';
+        const spy = sinon.stub(console, 'warn');
+        const engine = {};
+
+        createMiddleware(engine, ['A'], ['A']);
+
+        try {
+            spy.should.have.not.been.called;
+        } finally {
+            spy.restore();
+            process.env.NODE_ENV = oldEnv;
+        }
+    });
+
     it('should pass the current state to engine.save', () => {
         const engine = { save: sinon.stub().resolves() };
         const state = { x: 42 };
