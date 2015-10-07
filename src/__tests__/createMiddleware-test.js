@@ -13,6 +13,17 @@ describe('createMiddleware', () => {
         next.should.have.been.calledWith(action);
     });
 
+    it('should return the result of next', () => {
+        const engine = { save: sinon.stub().resolves() };
+        const store = { getState: sinon.spy() };
+        const next = sinon.stub().returns('nextResult');
+        const action = {};
+
+        const result = createMiddleware(engine)(store)(next)(action);
+
+        result.should.equal('nextResult');
+    });
+
     it('should ignore blacklisted actions', () => {
         const engine = { save: sinon.spy() };
         const store = {};
@@ -73,8 +84,8 @@ describe('createMiddleware', () => {
         createMiddleware(engine)(store)(next)(action);
 
         engine.save.should.not.have.been.called;
-    }
-    );
+    });
+
     it('should always ignore LOAD action', () => {
         const engine = { save: sinon.spy() };
         const store = {};

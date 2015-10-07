@@ -10,7 +10,7 @@ export default function(engine, actionBlacklist = []) {
 
     return ({ dispatch, getState }) => {
         return (next) => (action) => {
-            var result = next(action);
+            const result = next(action);
 
             // Skip blacklisted actions
             if (actionsToIgnore.indexOf(action.type) === -1) {
@@ -18,7 +18,7 @@ export default function(engine, actionBlacklist = []) {
                 const dispatchSave = () => dispatch(actionSave(saveState));
                 engine.save(saveState).then(dispatchSave).catch(swallow);
             }
-            
+
             return result;
         };
     };
