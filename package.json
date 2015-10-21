@@ -44,7 +44,7 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "immutable": "3.7.5",
+    "immutable": "^3.7.5",
     "lodash.isfunction": "^3.0.6",
     "lodash.isobject": "^3.0.2",
     "lodash.merge": "^3.3.2",
