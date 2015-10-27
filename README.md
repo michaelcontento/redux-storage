@@ -34,6 +34,8 @@ Save and load the [Redux][] state with ease.
 ## Usage
 
 ```js
+import storage from 'redux-storage'
+
 // Import redux and all your reducers as usual
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import * as reducers from './reducers';
