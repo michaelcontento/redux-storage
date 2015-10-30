@@ -29,7 +29,7 @@
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.8.29",
+    "babel": "^6.0.12",
     "babel-core": "^5.8.29",
     "babel-eslint": "^4.1.3",
     "chai": "^3.4.0",
