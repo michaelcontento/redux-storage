@@ -29,6 +29,7 @@
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.1.4",
     "babel-core": "^6.1.4",
     "babel-eslint": "^4.1.5",
     "babel-polyfill": "^6.1.4",
