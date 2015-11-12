@@ -1,7 +1,7 @@
 BIN := ./node_modules/.bin
 NPM := npm --loglevel=error
 
-MOCHA_ARGS = --compilers js:babel/register \
+MOCHA_ARGS = --compilers js:babel-core/register \
 	--recursive \
 	--bail \
 	--trace-deprecation \

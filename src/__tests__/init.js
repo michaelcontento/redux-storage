@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chaiString from 'chai-string';

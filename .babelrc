@@ -1,4 +1,3 @@
 {
-    "stage": "1",
-    "loose": ["es6.forOf"]
+    "presets": [ "es2015", "stage-1" ]
 }
