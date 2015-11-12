@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "immutable": "^3.7.5",
+    "lodash.isarray": "^3.0.4",
     "lodash.isfunction": "^3.0.6",
     "lodash.isobject": "^3.0.2",
     "lodash.merge": "^3.3.2",

@@ -34,6 +34,28 @@ describe('reducer', () => {
         spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
     });
 
+    describe('issue #45 - arrays are converted to objects', () => {
+        it('should not convert arrays to objects', () => {
+            const spy = sinon.spy();
+            const oldState = {};
+            const action = { type: LOAD, payload: { arr: [ 1, 2 ] } };
+
+            reducer(spy)(oldState, action);
+
+            spy.should.have.been.calledWith({ arr: [ 1, 2 ] }, action);
+        });
+
+        it('should overwrite changed arrays', () => {
+            const spy = sinon.spy();
+            const oldState = { arr: [ 1, 2 ] };
+            const action = { type: LOAD, payload: { arr: [ 3, 4 ] } };
+
+            reducer(spy)(oldState, action);
+
+            spy.should.have.been.calledWith({ arr: [ 3, 4 ] }, action);
+        });
+    });
+
     it('should use mergeDeep even if only newState is immutable', () => {
         const spy = sinon.spy();
         const oldState = { x: 0, y: 0 };

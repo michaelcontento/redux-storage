@@ -1,5 +1,6 @@
 import isFunction from 'lodash.isfunction';
 import isObject from 'lodash.isobject';
+import isArray from 'lodash.isarray';
 import merge from 'lodash.merge';
 import pairs from 'lodash.pairs';
 import { fromJS } from 'immutable';
@@ -24,7 +25,9 @@ function myMerge(oldState, newState) {
     for (const [key, value] of pairs(newState)) {
         // Assign if we don't need to merge at all
         if (!result.hasOwnProperty(key)) {
-            result[key] = isObject(value) ? merge({}, value) : value;
+            result[key] = isObject(value) && !isArray(value)
+                ? merge({}, value)
+                : value;
             continue;
         }
 
@@ -33,7 +36,7 @@ function myMerge(oldState, newState) {
             result[key] = oldValue.mergeDeep(value);
         } else if (isFunction(value.mergeDeep)) {
             result[key] = fromJS(oldValue).mergeDeep(value);
-        } else if (isObject(value)) {
+        } else if (isObject(value) && !isArray(value)) {
             result[key] = merge({}, oldValue, value);
         } else {
             result[key] = value;
