@@ -39,6 +39,7 @@
     "chai-string": "^1.1.3",
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
+    "eslint-config-michaelcontento": "^0.1.0",
     "eslint-plugin-mocha-only": "0.0.3",
     "mocha": "^2.3.3",
     "sinon": "^1.17.2",
