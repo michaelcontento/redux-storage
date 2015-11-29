@@ -1,7 +1,14 @@
-import * as constants from './constants';
-import decorators from './decorators';
-import createMiddleware from './createMiddleware';
-import createLoader from './createLoader';
-import reducer from './reducer';
+export * as decorators from './decorators';
+export { default as createLoader } from './createLoader';
+export { default as createMiddleware } from './createMiddleware';
+export { default as reducer } from './reducer';
+export { LOAD, SAVE } from './constants';
 
-export default { ...constants, createMiddleware, reducer, decorators, createLoader };
+// The full default export is required to be BC with redux-storage <= v1.3.2
+export default {
+    ...require('./constants'),
+    createLoader: require('./createLoader').default,
+    createMiddleware: require('./createMiddleware').default,
+    decorators: require('./decorators'),
+    reducer: require('./reducer').default
+};

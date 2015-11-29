@@ -34,7 +34,7 @@ Save and load the [Redux][] state with ease.
 ## Usage
 
 ```js
-import storage from 'redux-storage'
+import * as storage from 'redux-storage'
 
 // Import redux and all your reducers as usual
 import { createStore, applyMiddleware, combineReducers } from 'redux';
@@ -145,22 +145,22 @@ those will be added to a internal blacklist and won't trigger calls to
 `engine.save`.
 
 ```js
-import storage from 'redux-storage'
+import { createMiddleware } from 'redux-storage'
 
 import { APP_START } from './constants';
 
-const middleware = storage.createMiddleware(engine, [ APP_START ]);
+const middleware = createMiddleware(engine, [ APP_START ]);
 ```
 
 If you want to whitelist all actions that are allowed to issue a `engine.save`,
 just specify them as third argument.
 
 ```js
-import storage from 'redux-storage'
+import { createMiddleware } from 'redux-storage'
 
 import { SHOULD_SAVE } from './constants';
 
-const middleware = storage.createMiddleware(engine, [], [ SHOULD_SAVE ]);
+const middleware = createMiddleware(engine, [], [ SHOULD_SAVE ]);
 ```
 
 ### Decorators
@@ -172,9 +172,9 @@ Decorators simply wrap your engine instance and modify/enhance it's behaviour.
 Use this decorator to write only part of your state tree to disk.
 
 ```js
-import storage from 'redux-storage'
+import { decorators } from 'redux-storage'
 
-engine = storage.decorators.filter(engine, [
+engine = decorators.filter(engine, [
     ['some', 'key'],
     ['another', 'very', 'nested', 'key']
 ]);
@@ -186,9 +186,9 @@ This decorator will delay the expensive save operation for the given ms. Every
 new change to the state tree will reset the timeout!
 
 ```js
-import storage from 'redux-storage'
+import { decorators } from 'redux-storage'
 
-engine = storage.decorators.debounce(engine, 1500);
+engine = decorators.debounce(engine, 1500);
 ```
 
 #### Immutablejs
@@ -196,9 +196,9 @@ engine = storage.decorators.debounce(engine, 1500);
 Convert parts of the state tree into [Immutable][] objects on `engine.load`.
 
 ```js
-import storage from 'redux-storage'
+import { decorators } from 'redux-storage'
 
-engine = storage.decorators.immutablejs(engine, [
+engine = decorators.immutablejs(engine, [
     ['immutablejs-reducer'],
     ['plain-object-reducer', 'with-immutablejs-key']
 ]);

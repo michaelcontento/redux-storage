@@ -1,5 +1,3 @@
-import debounce from './debounce';
-import filter from './filter';
-import immutablejs from './immutablejs';
-
-export default { debounce, filter, immutablejs };
+export { default as debounce } from './debounce';
+export { default as filter } from './filter';
+export { default as immutablejs } from './immutablejs';
