@@ -1,5 +1,5 @@
-BIN := ./node_modules/.bin
-NPM := npm --loglevel=error
+BIN = ./node_modules/.bin
+NPM = npm --loglevel=error
 
 #
 # INSTALL
@@ -8,42 +8,67 @@ NPM := npm --loglevel=error
 install: node_modules/
 
 node_modules/: package.json
-	$(NPM) --ignore-scripts install
+	echo "> Installing ..."
+	$(NPM) --ignore-scripts install > /dev/null
 	touch node_modules/
-
-#
-# BUILD
-#
-
-build: clean install
-	$(BIN)/babel ./src --out-dir ./lib
-	mv -f ./lib/engines ./
 
 #
 # CLEAN
 #
 
 clean:
-	rm -rf ./lib
-	rm -rf ./engines
+	echo "> Cleaning ..."
+	rm -rf build/
+	rm -rf engines/
 
 mrproper: clean
-	rm -rf ./node_modules
+	echo "> Cleaning deep ..."
+	rm -rf node_modules/
+
+#
+# BUILD
+#
+
+build: clean install
+	echo "> Building ..."
+	$(BIN)/babel src/ --out-dir build/
+	mv -f ./build/engines ./
+
+build-watch: clean install
+	echo "> Building forever ..."
+	$(BIN)/babel src/ --out-dir build/ --watch
 
 #
 # TEST
 #
 
 lint: install
-	$(BIN)/eslint src
+	echo "> Linting ..."
+	$(BIN)/eslint src/
 
 test: install
+	echo "> Testing ..."
 	$(BIN)/mocca --require src/__tests__/init.js
 
 test-watch: install
+	echo "> Testing forever ..."
 	$(BIN)/mocca --require src/__tests__/init.js --watch
 
-ci: lint test
+#
+# PUBLISH
+#
+
+_publish : NODE_ENV ?= production
+_publish: lint test build
+
+publish-fix: _publish
+	$(BIN)/release-it --increment patch
+
+publish-feature: _publish
+	$(BIN)/release-it --increment minor
+
+publish-breaking: _publish
+	$(BIN)/release-it --increment major
 
 #
 # MAKEFILE
@@ -51,8 +76,9 @@ ci: lint test
 
 .PHONY: \
 	install \
-	build \
 	clean mrproper \
-	lint test test-watch ci
+	build build-watch \
+	lint test test-watch \
+	publish-fix publish-feature publish-breaking
 
 .SILENT:
