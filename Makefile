@@ -1,15 +1,6 @@
 BIN := ./node_modules/.bin
 NPM := npm --loglevel=error
 
-MOCHA_ARGS = --compilers js:babel-core/register \
-	--recursive \
-	--bail \
-	--trace-deprecation \
-	--throw-deprecation \
-	--check-leaks \
-	--require ./src/__tests__/init.js
-MOCHA_TARGET = "src/**/*-test.js"
-
 #
 # INSTALL
 #
@@ -47,10 +38,10 @@ lint: install
 	$(BIN)/eslint src
 
 test: install
-	$(BIN)/mocha $(MOCHA_ARGS) $(MOCHA_TARGET)
+	$(BIN)/mocca --require src/__tests__/init.js
 
 test-watch: install
-	$(BIN)/mocha $(MOCHA_ARGS) --watch $(MOCHA_TARGET)
+	$(BIN)/mocca --require src/__tests__/init.js --watch
 
 ci: lint test
 
