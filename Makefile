@@ -48,11 +48,11 @@ lint: install
 
 test: install
 	echo "> Testing ..."
-	$(BIN)/mocca --require src/__tests__/init.js
+	$(BIN)/mocca --require src/__tests__/init.js --globals localStorage
 
 test-watch: install
 	echo "> Testing forever ..."
-	$(BIN)/mocca --require src/__tests__/init.js --watch
+	$(BIN)/mocca --require src/__tests__/init.js --globals localStorage --watch
 
 #
 # PUBLISH

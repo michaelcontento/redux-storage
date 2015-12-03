@@ -2,7 +2,6 @@ import isFunction from 'lodash.isfunction';
 import isObject from 'lodash.isobject';
 import isArray from 'lodash.isarray';
 import merge from 'lodash.merge';
-import pairs from 'lodash.pairs';
 import { fromJS } from 'immutable';
 
 import { LOAD } from './constants';
@@ -21,8 +20,14 @@ function myMerge(oldState, newState) {
     // Otherwise we need to carefully merge to avoid deprecated warnings from
     // ImmutableJS see #8. We inspect only the first object level, as this is
     // a common pattern with redux!
-    const result = Object.assign({}, oldState);
-    for (const [key, value] of pairs(newState)) {
+    const result = { ...oldState };
+    // Note: Iterate using OLD STYLE and avoid Symbols for old browsers
+    for (const key in newState) {
+        if (!newState.hasOwnProperty(key)) {
+            continue;
+        }
+        const value = newState[key];
+
         // Assign if we don't need to merge at all
         if (!result.hasOwnProperty(key)) {
             result[key] = isObject(value) && !isArray(value)

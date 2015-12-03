@@ -46,7 +46,6 @@
     "lodash.isfunction": "^3.0.6",
     "lodash.isobject": "^3.0.2",
     "lodash.merge": "^3.3.2",
-    "lodash.pairs": "^3.0.1",
     "lodash.set": "^3.7.4",
     "redux-actions": "^0.8.0"
   },
