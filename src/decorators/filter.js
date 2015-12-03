@@ -13,11 +13,16 @@ export default function(engine, whitelist = []) {
             whitelist.forEach((key) => {
                 let value = state;
 
-                for (const keyPart of key) {
+                // Support strings for one-level paths
+                if (typeof key === 'string') {
+                    key = [key]; // eslint-disable-line no-param-reassign
+                }
+
+                key.forEach((keyPart) => {
                     // Support immutable structures
                     if (isFunction(value.has) && isFunction(value.get)) {
                         if (!value.has(keyPart)) {
-                            // No value stored - continue whiteliste.forEach!
+                            // No value stored
                             return;
                         }
 
@@ -25,12 +30,12 @@ export default function(engine, whitelist = []) {
                     } else if (value[keyPart]) {
                         value = value[keyPart];
                     } else {
-                        // No value stored - continue whiteliste.forEach!
+                        // No value stored
                         return;
                     }
-                }
 
-                set(saveState, key, value);
+                    set(saveState, key, value);
+                });
             });
 
             return engine.save(saveState);

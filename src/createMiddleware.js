@@ -5,16 +5,14 @@ function swallow() {
 }
 
 function warnAboutConfusingFiltering(blacklist, whitelist) {
-    for (const item of blacklist) {
-        if (whitelist.indexOf(item) === -1) {
-            continue;
-        }
-
-        console.warn( // eslint-disable-line no-console
-            `[redux-storage] Action ${item} is on BOTH black- and whitelist.`
-            + ` This is most likely a mistake!`
-        );
-    }
+    blacklist
+        .filter((item) => whitelist.indexOf(item) !== -1)
+        .forEach((item) => {
+            console.warn( // eslint-disable-line no-console
+                `[redux-storage] Action ${item} is on BOTH black- and whitelist.`
+                + ` This is most likely a mistake!`
+            );
+        });
 }
 
 export default function(engine, actionBlacklist = [], actionWhitelist = []) {
