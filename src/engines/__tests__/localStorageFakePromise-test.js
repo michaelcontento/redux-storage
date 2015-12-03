@@ -48,6 +48,14 @@ describe('engine/localStorageFakePromise', () => {
             engine.load().then();
         });
 
+        it('should be chainable like normal promises', () => {
+            const engine = localStorageFakePromise('foo');
+
+            engine.load().then().catch().then().catch();
+            engine.load().then().then();
+            engine.load().catch().catch();
+        });
+
         it('should load with the right key', () => {
             const engine = localStorageFakePromise('foo');
 
@@ -114,6 +122,14 @@ describe('engine/localStorageFakePromise', () => {
             const engine = localStorageFakePromise('foo');
 
             engine.save().then();
+        });
+
+        it('should be chainable like normal promises', () => {
+            const engine = localStorageFakePromise('foo');
+
+            engine.save().then().catch().then().catch();
+            engine.save().then().then();
+            engine.save().catch().catch();
         });
 
         it('should call localStorage.setItem with the json string', () => {
