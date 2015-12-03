@@ -113,6 +113,12 @@ const engine = createEngine('my-save-key');
 **Warning**: `localStorage` does not expose a async API and every save/load
 operation will block the JS thread!
 
+**Warning**: Some browsers like IE<=11 does not support Promises. For this you
+might use [localStorageFakePromise][] which should work too - **BUT** other
+parts of [redux-storage][] might depend on Promises too! So this is a possible
+workaround for very limited cases only. The best solution is to use a polyfill
+like [es6-promise][].
+
 ### Actions
 
 [redux-storage][] will trigger actions after every load or save operation from
@@ -214,9 +220,11 @@ engine = decorators.immutablejs(engine, [
   [redux-storage]: https://github.com/michaelcontento/redux-storage
   [react-native]: https://facebook.github.io/react-native/
   [localStorage]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/localStorage.js
+  [localStorageFakePromise]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/localStorageFakePromise.js
   [reactNativeAsyncStorage]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/reactNativeAsyncStorage.js
   [LOAD]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L1
   [SAVE]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L2
   [debounce]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/debounce.js
   [filter]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/filter.js
   [immutablejs]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/immutablejs.js
+  [es6-promise]: https://www.npmjs.com/package/es6-promise
