@@ -175,7 +175,8 @@ Use this decorator to write only part of your state tree to disk.
 import { decorators } from 'redux-storage'
 
 engine = decorators.filter(engine, [
-    ['some', 'key'],
+    'simple-key',
+    ['nested', 'key'],
     ['another', 'very', 'nested', 'key']
 ]);
 ```
