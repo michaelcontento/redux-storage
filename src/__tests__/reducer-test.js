@@ -38,21 +38,21 @@ describe('reducer', () => {
         it('should not convert arrays to objects', () => {
             const spy = sinon.spy();
             const oldState = {};
-            const action = { type: LOAD, payload: { arr: [ 1, 2 ] } };
+            const action = { type: LOAD, payload: { arr: [1, 2] } };
 
             reducer(spy)(oldState, action);
 
-            spy.should.have.been.calledWith({ arr: [ 1, 2 ] }, action);
+            spy.should.have.been.calledWith({ arr: [1, 2] }, action);
         });
 
         it('should overwrite changed arrays', () => {
             const spy = sinon.spy();
-            const oldState = { arr: [ 1, 2 ] };
-            const action = { type: LOAD, payload: { arr: [ 3, 4 ] } };
+            const oldState = { arr: [1, 2] };
+            const action = { type: LOAD, payload: { arr: [3, 4] } };
 
             reducer(spy)(oldState, action);
 
-            spy.should.have.been.calledWith({ arr: [ 3, 4 ] }, action);
+            spy.should.have.been.calledWith({ arr: [3, 4] }, action);
         });
     });
 

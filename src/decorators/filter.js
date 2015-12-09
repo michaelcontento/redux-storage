@@ -1,7 +1,7 @@
 import set from 'lodash.set';
 import isFunction from 'lodash.isfunction';
 
-export default function(engine, whitelist = []) {
+export default (engine, whitelist = []) => {
     return {
         load() {
             return engine.load();
@@ -41,4 +41,4 @@ export default function(engine, whitelist = []) {
             return engine.save(saveState);
         }
     };
-}
+};

@@ -1,4 +1,4 @@
-export default function(engine, ms) {
+export default (engine, ms) => {
     let lastTimeout;
     let lastReject;
 
@@ -23,4 +23,4 @@ export default function(engine, ms) {
             });
         }
     };
-}
+};

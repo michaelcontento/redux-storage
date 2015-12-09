@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-export default function(engine, whitelist = []) {
+export default (engine, whitelist = []) => {
     return {
         load() {
             return engine.load().then((result) => {
@@ -15,4 +15,4 @@ export default function(engine, whitelist = []) {
             return engine.save(state);
         }
     };
-}
+};

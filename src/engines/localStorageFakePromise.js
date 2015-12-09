@@ -10,18 +10,16 @@ function createFakePromise(thenResult) {
     };
 }
 
-export default function(key) {
-    return {
-        load() {
-            const jsonState = localStorage.getItem(key);
-            const jsonObj = JSON.parse(jsonState) || {};
-            return createFakePromise(jsonObj);
-        },
+export default (key) => ({
+    load() {
+        const jsonState = localStorage.getItem(key);
+        const jsonObj = JSON.parse(jsonState) || {};
+        return createFakePromise(jsonObj);
+    },
 
-        save(state) {
-            const jsonState = JSON.stringify(state);
-            localStorage.setItem(key, jsonState);
-            return createFakePromise();
-        }
-    };
-}
+    save(state) {
+        const jsonState = JSON.stringify(state);
+        localStorage.setItem(key, jsonState);
+        return createFakePromise();
+    }
+});
