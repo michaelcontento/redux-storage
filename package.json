@@ -35,7 +35,7 @@
     "babel-preset-michaelcontento": "^1.0.0",
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
-    "eslint-config-michaelcontento": "^1.0.0",
+    "eslint-config-michaelcontento": "^1.1.0",
     "eslint-plugin-mocha-only": "0.0.3",
     "mocca": "^0.2.2",
     "release-it": "^2.3.1"
