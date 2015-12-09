@@ -68,7 +68,7 @@ const store = createStoreWithMiddleware(reducer);
 // At this stage the whole system is in place and every action will trigger
 // a save operation.
 //
-// BUT (!) a existing old state HAS NOT been restored yet! It's up to you to
+// BUT (!) an existing old state HAS NOT been restored yet! It's up to you to
 // decide when this should happen. Most of the times you can/should do this
 // right after the store object has been created.
 
