@@ -19,6 +19,10 @@ export default (engine, whitelist = []) => {
                 }
 
                 key.forEach((keyPart) => {
+                    // If we get to a point where there is a null or undefined
+                    // value, we stop walking down the key path
+                    if (value === undefined || value === null) { return; }
+
                     // Support immutable structures
                     if (isFunction(value.has) && isFunction(value.get)) {
                         if (!value.has(keyPart)) {
@@ -27,11 +31,9 @@ export default (engine, whitelist = []) => {
                         }
 
                         value = value.get(keyPart);
-                    } else if (value[keyPart]) {
-                        value = value[keyPart];
                     } else {
-                        // No value stored
-                        return;
+                        // Always make sure to write out the value
+                        value = value[keyPart];
                     }
 
                     set(saveState, key, value);
