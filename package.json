@@ -35,7 +35,7 @@
     "eslint": "^1.10.3",
     "eslint-config-michaelcontento": "^1.1.1",
     "eslint-plugin-mocha-only": "0.0.3",
-    "mocca": "^0.2.2",
+    "mocca": "^0.3.0",
     "release-it": "^2.3.1"
   },
   "dependencies": {
