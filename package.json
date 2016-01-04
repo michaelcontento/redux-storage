@@ -26,6 +26,11 @@
     "localstorage"
   ],
   "author": "Michael Contento <michaelcontento@gmail.com>",
+  "files": [
+    "build/",
+    "engines/",
+    "!**/__tests__/**"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.3.15",
