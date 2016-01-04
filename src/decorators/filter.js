@@ -27,7 +27,7 @@ export default (engine, whitelist = []) => {
                         }
 
                         value = value.get(keyPart);
-                    } else if (value[keyPart]) {
+                    } else if (value.hasOwnProperty(keyPart)) {
                         value = value[keyPart];
                     } else {
                         // No value stored

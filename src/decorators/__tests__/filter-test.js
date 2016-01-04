@@ -65,4 +65,22 @@ describe('decorators/filter', () => {
 
         save.should.have.been.calledWith({ some: { key: 42 } });
     });
+
+    it('should handle null values (PR #64)', () => {
+        const save = sinon.spy();
+        const engine = filter({ save }, [['a', 'first']]);
+
+        engine.save({ a: { first: null, second: 2 } });
+
+        save.should.have.been.calledWith({ a: { first: null } });
+    });
+
+    it('should handle null values (PR #64) - immutable', () => {
+        const save = sinon.spy();
+        const engine = filter({ save }, [['a', 'first']]);
+
+        engine.save(map({ a: { first: null, second: 2 } }));
+
+        save.should.have.been.calledWith({ a: { first: null } });
+    });
 });
