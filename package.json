@@ -31,6 +31,14 @@
     "engines/",
     "!**/__tests__/**"
   ],
+  "babel": {
+    "presets": [
+      "michaelcontento"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "michaelcontento"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.3.15",
