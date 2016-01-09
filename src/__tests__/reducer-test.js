@@ -106,5 +106,15 @@ describe('reducer', () => {
 
             spy.should.have.been.calledWith({ x: 1337 }, action);
         });
+
+        it('should properly merge if old state values with null or undefined', () => {
+            const spy = sinon.spy();
+            const oldState = { x: null, y: void(0) };
+            const action = { type: LOAD, payload: { x: 1337, y: 1338 } };
+
+            reducer(spy)(oldState, action);
+
+            spy.should.have.been.calledWith({ x: 1337, y: 1338 }, action);
+        });
     });
 });
