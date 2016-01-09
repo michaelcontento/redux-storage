@@ -1,6 +1,8 @@
 import isFunction from 'lodash.isfunction';
 import isObject from 'lodash.isobject';
 import isArray from 'lodash.isarray';
+import isNull from 'lodash.isnull';
+import isUndefined from 'lodash.isundefined';
 import merge from 'lodash.merge';
 import { fromJS } from 'immutable';
 
@@ -37,12 +39,17 @@ function myMerge(oldState, newState) {
         }
 
         const oldValue = result[key];
-        if (isFunction(oldValue.mergeDeep)) {
-            result[key] = oldValue.mergeDeep(value);
-        } else if (isFunction(value.mergeDeep)) {
-            result[key] = fromJS(oldValue).mergeDeep(value);
-        } else if (isObject(value) && !isArray(value)) {
-            result[key] = merge({}, oldValue, value);
+        
+        if (!isNull(oldValue) && !isUndefined(oldValue)) {
+            if (isFunction(oldValue.mergeDeep)) {
+                result[key] = oldValue.mergeDeep(value);
+            } else if (isFunction(value.mergeDeep)) {
+                result[key] = fromJS(oldValue).mergeDeep(value);
+            } else if (isObject(value) && !isArray(value)) {
+                result[key] = merge({}, oldValue, value);
+            } else {
+                result[key] = value;
+            }
         } else {
             result[key] = value;
         }
