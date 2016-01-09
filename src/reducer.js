@@ -39,7 +39,7 @@ function myMerge(oldState, newState) {
         }
 
         const oldValue = result[key];
-        
+
         if (!isNull(oldValue) && !isUndefined(oldValue)) {
             if (isFunction(oldValue.mergeDeep)) {
                 result[key] = oldValue.mergeDeep(value);
