@@ -37,9 +37,10 @@ function myMerge(oldState, newState) {
         }
 
         const oldValue = result[key];
-        if (isFunction(oldValue.mergeDeep)) {
+
+        if (!!oldValue && isFunction(oldValue.mergeDeep)) {
             result[key] = oldValue.mergeDeep(value);
-        } else if (isFunction(value.mergeDeep)) {
+        } else if (!!value && isFunction(value.mergeDeep)) {
             result[key] = fromJS(oldValue).mergeDeep(value);
         } else if (isObject(value) && !isArray(value)) {
             result[key] = merge({}, oldValue, value);
