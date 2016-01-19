@@ -31,11 +31,6 @@
     "engines/",
     "!**/__tests__/**"
   ],
-  "babel": {
-    "presets": [
-      "michaelcontento"
-    ]
-  },
   "eslintConfig": {
     "extends": "michaelcontento"
   },
