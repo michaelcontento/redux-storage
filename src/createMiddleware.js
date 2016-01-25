@@ -1,3 +1,6 @@
+import isFunction from 'lodash.isfunction';
+import isObject from 'lodash.isobject';
+
 import { save as actionSave } from './actions';
 import { LOAD, SAVE } from './constants';
 
@@ -15,6 +18,40 @@ function warnAboutConfusingFiltering(blacklist, whitelist) {
         });
 }
 
+function isValidAction(action) {
+    const isFunc = isFunction(action);
+    const isObj = isObject(action);
+    const hasType = isObj && action.hasOwnProperty('type');
+
+    if (!isFunc && isObj && hasType) {
+        return true;
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+        if (isFunc) {
+            console.warn( // eslint-disable-line no-console
+                `[redux-storage] ACTION IGNORED! Actions should be objectes`
+                + ` with a type property but received a function! Maybe your`
+                + ` function resolving middleware (e.g. redux-thunk) is placed`
+                + ` before redux-storage?`
+            );
+        } else if (!isObj) {
+            console.warn( // eslint-disable-line no-console
+                `[redux-storage] ACTION IGNORED! Actions should be objects`
+                + ` with a type property but received: ${action}`
+            );
+        } else if (!hasType) {
+            console.warn( // eslint-disable-line no-console
+                `[redux-storage] ACTION IGNORED! Action objects should have`
+                + ` a type property.`
+            );
+        }
+    }
+
+    return false;
+}
+
+
 export default (engine, actionBlacklist = [], actionWhitelist = []) => {
     // Also don't save if we process our own actions
     const blacklistedActions = [...actionBlacklist, LOAD, SAVE];
@@ -26,6 +63,10 @@ export default (engine, actionBlacklist = [], actionWhitelist = []) => {
     return ({ dispatch, getState }) => {
         return (next) => (action) => {
             const result = next(action);
+
+            if (!isValidAction(action)) {
+                return result;
+            }
 
             const isOnBlacklist = blacklistedActions.indexOf(action.type) !== -1;
             const isOnWhitelist = actionWhitelist.length === 0

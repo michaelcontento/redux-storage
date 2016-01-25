@@ -2,11 +2,43 @@ import createMiddleware from '../createMiddleware';
 import { LOAD, SAVE } from '../constants';
 
 describe('createMiddleware', () => {
+    function describeConsoleWarnInNonProduction(msg, cb, msgCheck) {
+        describe(msg, () => {
+            let warn;
+            let oldEnv;
+
+            beforeEach(() => {
+                oldEnv = process.env.NODE_ENV;
+                warn = sinon.stub(console, 'warn');
+            });
+
+            afterEach(() => {
+                warn.restore();
+                process.env.NODE_ENV = oldEnv;
+            });
+
+            it('should warn if NODE_ENV != production', () => {
+                process.env.NODE_ENV = 'develop';
+                cb();
+                warn.should.have.been.called;
+                if (msgCheck) {
+                    msgCheck(warn.firstCall.args[0]);
+                }
+            });
+
+            it('should NOT warn if NODE_ENV == production', () => {
+                process.env.NODE_ENV = 'production';
+                cb();
+                warn.should.not.have.been.called;
+            });
+        });
+    }
+
     it('should call next with the given action', () => {
         const engine = { save: sinon.stub().resolves() };
         const store = { getState: sinon.spy() };
         const next = sinon.spy();
-        const action = {};
+        const action = { type: 'dummy' };
 
         createMiddleware(engine)(store)(next)(action);
 
@@ -17,7 +49,7 @@ describe('createMiddleware', () => {
         const engine = { save: sinon.stub().resolves() };
         const store = { getState: sinon.spy() };
         const next = sinon.stub().returns('nextResult');
-        const action = {};
+        const action = { type: 'dummy' };
 
         const result = createMiddleware(engine)(store)(next)(action);
 
@@ -57,44 +89,74 @@ describe('createMiddleware', () => {
         engine.save.should.have.been.called;
     });
 
-    it('should warn about action on both black- and whitelist in non-production envs', () => {
-        const oldEnv = process.env.NODE_ENV;
-        process.env.NODE_ENV = 'develop';
-        const spy = sinon.stub(console, 'warn');
-        const engine = {};
+    describeConsoleWarnInNonProduction(
+        'should not process functions',
+        () => {
+            const engine = { save: sinon.stub().resolves() };
+            const store = { getState: sinon.spy() };
+            const next = sinon.spy();
+            const action = () => {};
 
-        createMiddleware(engine, ['A'], ['A']);
+            createMiddleware(engine)(store)(next)(action);
 
-        try {
-            spy.should.have.been.called;
-        } finally {
-            spy.restore();
-            process.env.NODE_ENV = oldEnv;
+            engine.save.should.not.have.been.called;
+        },
+        (msg) => {
+            msg.should.contain('ACTION IGNORED!');
+            msg.should.contain('but received a function');
         }
-    });
+    );
 
-    it('should NOT warn about action on both black- and whitelist in production', () => {
-        const oldEnv = process.env.NODE_ENV;
-        process.env.NODE_ENV = 'production';
-        const spy = sinon.stub(console, 'warn');
-        const engine = {};
+    describeConsoleWarnInNonProduction(
+        'should not process strings',
+        () => {
+            const engine = { save: sinon.stub().resolves() };
+            const store = { getState: sinon.spy() };
+            const next = sinon.spy();
+            const action = 'haha';
 
-        createMiddleware(engine, ['A'], ['A']);
+            createMiddleware(engine)(store)(next)(action);
 
-        try {
-            spy.should.have.not.been.called;
-        } finally {
-            spy.restore();
-            process.env.NODE_ENV = oldEnv;
+            engine.save.should.not.have.been.called;
+        },
+        (msg) => {
+            msg.should.contain('ACTION IGNORED!');
+            msg.should.contain('but received: haha');
         }
-    });
+    );
+
+    describeConsoleWarnInNonProduction(
+        'should not process objects without a type',
+        () => {
+            const engine = { save: sinon.stub().resolves() };
+            const store = { getState: sinon.spy() };
+            const next = sinon.spy();
+            const action = { noType: 'damn it' };
+
+            createMiddleware(engine)(store)(next)(action);
+
+            engine.save.should.not.have.been.called;
+        },
+        (msg) => {
+            msg.should.contain('ACTION IGNORED!');
+            msg.should.contain('objects should have a type property');
+        }
+    );
+
+    describeConsoleWarnInNonProduction(
+        'should warn about action on both black- and whitelist',
+        () => {
+            const engine = {};
+            createMiddleware(engine, ['A'], ['A']);
+        }
+    );
 
     it('should pass the current state to engine.save', () => {
         const engine = { save: sinon.stub().resolves() };
         const state = { x: 42 };
         const store = { getState: sinon.stub().returns(state) };
         const next = sinon.spy();
-        const action = {};
+        const action = { type: 'dummy' };
 
         createMiddleware(engine)(store)(next)(action);
 
@@ -109,7 +171,7 @@ describe('createMiddleware', () => {
             dispatch: sinon.spy()
         };
         const next = sinon.spy();
-        const action = {};
+        const action = { type: 'dummy' };
 
         createMiddleware(engine)(store)(next)(action);
 
@@ -124,7 +186,7 @@ describe('createMiddleware', () => {
         const engine = { save: sinon.stub().rejects() };
         const store = { getState: sinon.spy() };
         const next = sinon.spy();
-        const action = {};
+        const action = { type: 'dummy' };
 
         createMiddleware(engine)(store)(next)(action);
     });
