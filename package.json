@@ -56,6 +56,6 @@
     "redux-actions": "^0.9.0"
   },
   "peerDependencies": {
-    "redux": "^3.0.0 || ^2.0.0 || ^1.0.0 || 1.0.0-alpha || 1.0.0-rc"
+    "redux": "^3.2.0"
   }
 }
