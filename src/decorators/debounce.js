@@ -10,7 +10,7 @@ export default (engine, ms) => {
         save(state) {
             clearTimeout(lastTimeout);
             if (lastReject) {
-                lastReject(Error("Debounced, newer action pending"));
+                lastReject(Error('Debounced, newer action pending'));
                 lastReject = null;
             }
 
