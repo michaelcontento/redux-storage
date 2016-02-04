@@ -241,4 +241,5 @@ engine.addMigration(3, (state) => { /* migration step for 3 */ return state; });
   [debounce]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/debounce.js
   [filter]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/filter.js
   [immutablejs]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/immutablejs.js
+  [migrate]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/migrate.js
   [es6-promise]: https://www.npmjs.com/package/es6-promise
