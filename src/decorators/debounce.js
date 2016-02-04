@@ -3,9 +3,7 @@ export default (engine, ms) => {
     let lastReject;
 
     return {
-        load() {
-            return engine.load();
-        },
+        ...engine,
 
         save(state) {
             clearTimeout(lastTimeout);

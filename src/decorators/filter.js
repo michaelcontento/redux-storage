@@ -3,9 +3,7 @@ import isFunction from 'lodash.isfunction';
 
 export default (engine, whitelist = []) => {
     return {
-        load() {
-            return engine.load();
-        },
+        ...engine,
 
         save(state) {
             const saveState = {};

@@ -25,6 +25,7 @@ Save and load the [Redux][] state with ease.
     * [debounce][]: batch multiple save operations
     * [filter][]: only store a subset of the whole state tree
     * [immutablejs][]: load parts of the state tree as [Immutable][] objects
+    * [migrate][]: Versioned storage with migrations
 * Black- and whitelist actions from issuing a save operation
 
 ## Installation
@@ -209,6 +210,19 @@ engine = decorators.immutablejs(engine, [
     ['immutablejs-reducer'],
     ['plain-object-reducer', 'with-immutablejs-key']
 ]);
+```
+
+#### Migration
+
+Versioned storage with migrations.
+
+```js
+import { decorators } from 'redux-storage'
+
+engine = decorators.migrate(engine, 3);
+engine.addMigration(1, (state) => { /* migration step for 1 */ return state; });
+engine.addMigration(2, (state) => { /* migration step for 2 */ return state; });
+engine.addMigration(3, (state) => { /* migration step for 3 */ return state; });
 ```
 
 ## Todo
