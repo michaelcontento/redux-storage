@@ -2,6 +2,8 @@ import { fromJS } from 'immutable';
 
 export default (engine, whitelist = []) => {
     return {
+        ...engine,
+
         load() {
             return engine.load().then((result) => {
                 whitelist.forEach((key) => {
@@ -10,9 +12,5 @@ export default (engine, whitelist = []) => {
                 return result;
             });
         },
-
-        save(state) {
-            return engine.save(state);
-        }
     };
 };
