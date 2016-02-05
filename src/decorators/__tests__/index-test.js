@@ -19,4 +19,9 @@ describe('decorators', () => {
         const { immutablejs } = require('../');
         immutablejs.should.be.a.func;
     });
+
+    it('should contain migrate', () => {
+        const { migrate } = require('../');
+        migrate.should.be.a.func;
+    });
 });
