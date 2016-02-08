@@ -1,8 +1,9 @@
 {
   "name": "redux-storage",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Persistence layer for redux with flexible backends",
   "main": "build/index.js",
+  "jsnext:main": "src/index.js",
   "scripts": {
     "test": "make lint test build"
   },
@@ -29,6 +30,7 @@
   "files": [
     "build/",
     "engines/",
+    "src",
     "!**/__tests__/**"
   ],
   "eslintConfig": {
