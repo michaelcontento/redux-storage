@@ -13,7 +13,7 @@ describe('decorators/migrate', () => {
 
         save.should.have.been.called;
     });
-    
+
     it('should proxy save to engine.save without mutating the state', async () => {
         const save = sinon.spy();
         const state = {};
