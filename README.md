@@ -25,6 +25,7 @@ Save and load the [Redux][] state with ease.
     * [debounce][]: batch multiple save operations
     * [filter][]: only store a subset of the whole state tree
     * [immutablejs][]: load parts of the state tree as [Immutable][] objects
+    * [migrate][]: versioned storage with migrations
 * Black- and whitelist actions from issuing a save operation
 
 ## Installation
@@ -183,4 +184,5 @@ const middleware = createMiddleware(engine, [], [ SHOULD_SAVE ]);
   [SAVE]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L2
   [debounce]: https://github.com/michaelcontento/redux-storage-decorator-debounce
   [filter]: https://github.com/michaelcontento/redux-storage-decorator-filter
+  [migrate]: https://github.com/mathieudutour/redux-storage-decorator-migrate
   [immutablejs]: https://github.com/michaelcontento/redux-storage-decorator-immutablejs
