@@ -14,6 +14,16 @@ describe('decorators/migrate', () => {
         save.should.have.been.called;
     });
 
+    it('should proxy save to engine.save without mutating the state', async () => {
+        const save = sinon.spy();
+        const state = {};
+        const engine = migrate({ save });
+
+        await engine.save({});
+        state.should.be.deep.equal({});
+        save.should.have.been.called;
+    });
+
     it('should save the current version at the default key', async () => {
         const save = identityStub;
         const engine = migrate({ save }, 42);

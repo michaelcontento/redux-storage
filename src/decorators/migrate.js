@@ -26,8 +26,10 @@ export default (engine, currentVersion = 0, key = 'redux-storage-decorators-migr
         },
 
         save(state) {
-            state[key] = currentVersion;
-            return engine.save(state);
+            return engine.save({
+                ...state,
+                [key]: currentVersion // don't mutate the state
+            });
         },
 
         addMigration(version, migration) {
