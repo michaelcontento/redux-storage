@@ -19,7 +19,6 @@ node_modules/: package.json
 clean:
 	echo "> Cleaning ..."
 	rm -rf build/
-	rm -rf engines/
 
 mrproper: clean
 	echo "> Cleaning deep ..."
@@ -32,7 +31,6 @@ mrproper: clean
 build: clean install
 	echo "> Building ..."
 	$(BIN)/babel src/ --out-dir build/
-	mv -f ./build/engines ./
 
 build-watch: clean install
 	echo "> Building forever ..."
@@ -48,11 +46,11 @@ lint: install
 
 test: install
 	echo "> Testing ..."
-	$(BIN)/mocca --require src/__tests__/init.js --globals localStorage
+	$(BIN)/mocca
 
 test-watch: install
 	echo "> Testing forever ..."
-	$(BIN)/mocca --require src/__tests__/init.js --globals localStorage --watch
+	$(BIN)/mocca --watch
 
 #
 # PUBLISH

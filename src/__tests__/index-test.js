@@ -1,6 +1,6 @@
 import defaultImport from '../';
 import * as fullImport from '../';
-import { LOAD, SAVE, createLoader, createMiddleware, decorators, reducer } from '../';
+import { LOAD, SAVE, createLoader, createMiddleware, reducer } from '../';
 
 describe('index', () => {
     it('should export everything by default', () => {
@@ -23,11 +23,6 @@ describe('index', () => {
 
     it('should export createMiddleware', () => {
         createMiddleware.should.be.a.func;
-    });
-
-    it('should export decorators', () => {
-        decorators.should.be.a.object;
-        decorators.should.not.be.empty;
     });
 
     it('should export reducer', () => {

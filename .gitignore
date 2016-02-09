@@ -1,6 +1,5 @@
 # build artefacts
 /build/
-/engines/
 
 # npm
 /node_modules/
