@@ -178,13 +178,19 @@ Decorators simply wrap your engine instance and modify/enhance it's behaviour.
 
 Use this decorator to write only part of your state tree to disk.
 
+It will write the state corresponding to the whitelisted keys minus the blacklisted ones.
+
 ```js
 import { decorators } from 'redux-storage'
 
 engine = decorators.filter(engine, [
-    'simple-key',
+    'whitelisted-key',
     ['nested', 'key'],
     ['another', 'very', 'nested', 'key']
+],
+[
+    'backlisted-key',
+    ['nested', 'blacklisted-key'],
 ]);
 ```
 
