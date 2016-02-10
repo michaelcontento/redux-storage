@@ -2,9 +2,15 @@ import isFunction from 'lodash.isfunction';
 import isObject from 'lodash.isobject';
 import isArray from 'lodash.isarray';
 import merge from 'lodash.merge';
-import { fromJS } from 'immutable';
 
 import { LOAD } from './constants';
+
+let fromJS;
+try {
+    fromJS = require('immutable').fromJS;
+} catch (err) {
+    // ImmutableJS support is optional!
+}
 
 function myMerge(oldState, newState) {
     // Whole state is ImmutableJS? Easiest way to merge
