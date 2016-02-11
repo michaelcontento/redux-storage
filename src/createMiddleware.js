@@ -30,10 +30,10 @@ function isValidAction(action) {
     if (process.env.NODE_ENV !== 'production') {
         if (isFunc) {
             console.warn( // eslint-disable-line no-console
-                `[redux-storage] ACTION IGNORED! Actions should be objectes`
+                `[redux-storage] ACTION IGNORED! Actions should be objects`
                 + ` with a type property but received a function! Maybe your`
-                + ` function resolving middleware (e.g. redux-thunk) is placed`
-                + ` before redux-storage?`
+                + ` function resolving middleware (e.g. redux-thunk) should be`
+                + ` placed before redux-storage?`
             );
         } else if (!isObj) {
             console.warn( // eslint-disable-line no-console
