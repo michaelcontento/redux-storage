@@ -1,6 +1,6 @@
 # [redux-storage][]
 
-[![build](https://travis-ci.org/michaelcontento/redux-storage.svg)](https://travis-ci.org/michaelcontento/redux-storage)
+[![build](https://travis-ci.org/michaelcontento/redux-storage.svg?branch=master)](https://travis-ci.org/michaelcontento/redux-storage)
 [![dependencies](https://david-dm.org/michaelcontento/redux-storage.svg)](https://david-dm.org/michaelcontento/redux-storage)
 [![devDependencies](https://david-dm.org/michaelcontento/redux-storage/dev-status.svg)](https://david-dm.org/michaelcontento/redux-storage#info=devDependencies)
 
