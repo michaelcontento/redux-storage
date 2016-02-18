@@ -5,14 +5,7 @@ import merge from 'lodash.merge';
 
 import { LOAD } from './constants';
 
-let fromJS;
-try {
-    fromJS = require('immutable').fromJS;
-} catch (err) {
-    // ImmutableJS support is optional!
-}
-
-function myMerge(oldState, newState) {
+function myMerge(oldState, newState, fromJS) {
     // Whole state is ImmutableJS? Easiest way to merge
     if (isFunction(oldState.mergeDeep)) {
         return oldState.mergeDeep(newState);
@@ -58,10 +51,10 @@ function myMerge(oldState, newState) {
     return result;
 }
 
-export default (reducer) => {
+export default (reducer, fromJS) => {
     return (state, action) => reducer(
         action.type === LOAD
-            ? myMerge(state, action.payload)
+            ? myMerge(state, action.payload, fromJS)
             : state,
         action
     );

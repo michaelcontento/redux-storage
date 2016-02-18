@@ -1,4 +1,4 @@
-import { Map as map } from 'immutable';
+import { Map as map, fromJS } from 'immutable';
 
 import reducer from '../reducer';
 import { LOAD } from '../constants';
@@ -29,7 +29,7 @@ describe('reducer', () => {
         const oldState = map({ x: 0, y: 0 });
         const action = { type: LOAD, payload: { y: 42 } };
 
-        reducer(spy)(oldState, action);
+        reducer(spy, fromJS)(oldState, action);
 
         spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
     });
@@ -61,7 +61,7 @@ describe('reducer', () => {
         const oldState = { x: 0, y: 0 };
         const action = { type: LOAD, payload: map({ y: 42 }) };
 
-        reducer(spy)(oldState, action);
+        reducer(spy, fromJS)(oldState, action);
 
         spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
     });
@@ -72,7 +72,7 @@ describe('reducer', () => {
             const oldState = { nested: map({ x: 42 }) };
             const action = { type: LOAD, payload: { nested: { x: 1337 } } };
 
-            reducer(spy)(oldState, action);
+            reducer(spy, fromJS)(oldState, action);
 
             spy.should.have.been.calledWith({ nested: map({ x: 1337 }) }, action);
         });
@@ -82,7 +82,7 @@ describe('reducer', () => {
             const oldState = { nested: { x: 42 } };
             const action = { type: LOAD, payload: { nested: map({ x: 1337 }) } };
 
-            reducer(spy)(oldState, action);
+            reducer(spy, fromJS)(oldState, action);
 
             spy.should.have.been.calledWith({ nested: map({ x: 1337 }) }, action);
         });
