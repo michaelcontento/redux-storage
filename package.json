@@ -1,6 +1,6 @@
 {
   "name": "redux-storage",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Persistence layer for redux with flexible backends",
   "main": "build/index.js",
   "jsnext:main": "src/index.js",
@@ -15,9 +15,6 @@
   "keywords": [
     "redux",
     "redux-middleware",
-    "react-native",
-    "promise",
-    "middleware",
     "fsa",
     "flux-standard-action",
     "flux",
@@ -29,7 +26,6 @@
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "files": [
     "build/",
-    "engines/",
     "src",
     "!**/__tests__/**"
   ],
@@ -45,17 +41,15 @@
     "eslint": "^1.10.3",
     "eslint-config-michaelcontento": "^1.1.1",
     "eslint-plugin-mocha-only": "0.0.3",
+    "immutable": "^3.7.6",
     "mocca": "^0.3.0",
     "release-it": "^2.3.1"
   },
   "dependencies": {
-    "immutable": "^3.7.6",
     "lodash.isarray": "^4.0.0",
     "lodash.isfunction": "^3.0.7",
     "lodash.isobject": "^3.0.2",
     "lodash.merge": "^4.0.2",
-    "lodash.set": "^4.0.0",
-    "lodash.unset": "^4.1.0",
     "redux-actions": "^0.9.0"
   },
   "peerDependencies": {

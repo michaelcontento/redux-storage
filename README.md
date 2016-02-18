@@ -1,7 +1,6 @@
-[redux-storage][]
-=================
+# [redux-storage][]
 
-[![build](https://travis-ci.org/michaelcontento/redux-storage.svg)](https://travis-ci.org/michaelcontento/redux-storage)
+[![build](https://travis-ci.org/michaelcontento/redux-storage.svg?branch=master)](https://travis-ci.org/michaelcontento/redux-storage)
 [![dependencies](https://david-dm.org/michaelcontento/redux-storage.svg)](https://david-dm.org/michaelcontento/redux-storage)
 [![devDependencies](https://david-dm.org/michaelcontento/redux-storage/dev-status.svg)](https://david-dm.org/michaelcontento/redux-storage#info=devDependencies)
 
@@ -15,8 +14,9 @@ Save and load the [Redux][] state with ease.
 ## Features
 
 * Flexible storage engines
-    * [localStorage][] based on `window.localStorage`
-    * [reactNativeAsyncStorage][] based on `react-native/AsyncStorage`
+    * [localStorage][]: based on window.localStorage
+        * Or for environments without `Promise` support [localStorageFakePromise][]
+    * [reactNativeAsyncStorage][]: based on `react-native/AsyncStorage`
 * Storage engines can be async
 * Load and save actions that can be observed
     * [SAVE][]: `{ type: 'REDUX_STORAGE_SAVE', payload: /* state tree */ }`
@@ -25,12 +25,15 @@ Save and load the [Redux][] state with ease.
     * [debounce][]: batch multiple save operations
     * [filter][]: only store a subset of the whole state tree
     * [immutablejs][]: load parts of the state tree as [Immutable][] objects
-    * [migrate][]: Versioned storage with migrations
+    * [migrate][]: versioned storage with migrations
 * Black- and whitelist actions from issuing a save operation
 
 ## Installation
 
     npm install --save redux-storage
+
+And you need to install at least one [redux-storage-engine][npm-engine], as
+[redux-storage][] is only the *"management core"*.
 
 ## Usage
 
@@ -51,7 +54,7 @@ const reducer = storage.reducer(combineReducers(reducers));
 // Now it's time to decide which storage engine should be used
 //
 // Note: The arguments to `createEngine` are different for every engine!
-import createEngine from 'redux-storage/engines/reactNativeAsyncStorage';
+import createEngine from 'redux-storage-engine-localStorage';
 const engine = createEngine('my-save-key');
 
 // And with the engine we can create our middleware function. The middleware
@@ -88,37 +91,12 @@ load(store)
 
 ## Details
 
-### Engines
+### Engines & Decorators
 
-#### reactNativeAsyncStorage
-
-This will use `AsyncStorage` out of [react-native][].
-
-```js
-import createEngine from 'redux-storage/engines/reactNativeAsyncStorage';
-const engine = createEngine('my-save-key');
-```
-
-**Warning**: [react-native][] is *not* a dependency of [redux-storage][]! You
-have to install it separately.
-
-#### localStorage
-
-Stores everything inside `window.localStorage`.
-
-```js
-import createEngine from 'redux-storage/engines/localStorage';
-const engine = createEngine('my-save-key');
-```
-
-**Warning**: `localStorage` does not expose a async API and every save/load
-operation will block the JS thread!
-
-**Warning**: Some browsers like IE<=11 does not support Promises. For this you
-might use [localStorageFakePromise][] which should work too - **BUT** other
-parts of [redux-storage][] might depend on Promises too! So this is a possible
-workaround for very limited cases only. The best solution is to use a polyfill
-like [es6-promise][].
+Both are published as own packages on npm. But as a convention all engines share
+the keyword [redux-storage-engine][npm-engine] and decorators can be found with
+[redux-storage-decorator][npm-decorator]. So it's pretty trivial to find all
+the additions to [redux-storage][] you need
 
 ### Actions
 
@@ -170,82 +148,41 @@ import { SHOULD_SAVE } from './constants';
 const middleware = createMiddleware(engine, [], [ SHOULD_SAVE ]);
 ```
 
-### Decorators
+## License
 
-Decorators simply wrap your engine instance and modify/enhance it's behaviour.
+    The MIT License (MIT)
 
-#### Filter
+    Copyright (c) 2015 Michael Contento
 
-Use this decorator to write only part of your state tree to disk.
+    Permission is hereby granted, free of charge, to any person obtaining a copy of
+    this software and associated documentation files (the "Software"), to deal in
+    the Software without restriction, including without limitation the rights to
+    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+    the Software, and to permit persons to whom the Software is furnished to do so,
+    subject to the following conditions:
 
-It will write the state corresponding to the whitelisted keys minus the blacklisted ones.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-```js
-import { decorators } from 'redux-storage'
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-engine = decorators.filter(engine, [
-    'whitelisted-key',
-    ['nested', 'key'],
-    ['another', 'very', 'nested', 'key']
-],
-[
-    'backlisted-key',
-    ['nested', 'blacklisted-key'],
-]);
-```
-
-#### Debounce
-
-This decorator will delay the expensive save operation for the given ms. Every
-new change to the state tree will reset the timeout!
-
-```js
-import { decorators } from 'redux-storage'
-
-engine = decorators.debounce(engine, 1500);
-```
-
-#### Immutablejs
-
-Convert parts of the state tree into [Immutable][] objects on `engine.load`.
-
-```js
-import { decorators } from 'redux-storage'
-
-engine = decorators.immutablejs(engine, [
-    ['immutablejs-reducer'],
-    ['plain-object-reducer', 'with-immutablejs-key']
-]);
-```
-
-#### Migration
-
-Versioned storage with migrations.
-
-```js
-import { decorators } from 'redux-storage'
-
-engine = decorators.migrate(engine, 3);
-engine.addMigration(1, (state) => { /* migration step for 1 */ return state; });
-engine.addMigration(2, (state) => { /* migration step for 2 */ return state; });
-engine.addMigration(3, (state) => { /* migration step for 3 */ return state; });
-```
-
-## Todo
-
-- Write tests for everything!
-
+  [npm-engine]: https://www.npmjs.com/browse/keyword/redux-storage-engine
+  [npm-decorator]: https://www.npmjs.com/browse/keyword/redux-storage-decorator
   [Redux]: https://github.com/gaearon/redux
   [Immutable]: https://github.com/facebook/immutable-js
   [redux-storage]: https://github.com/michaelcontento/redux-storage
   [react-native]: https://facebook.github.io/react-native/
-  [localStorage]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/localStorage.js
-  [localStorageFakePromise]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/localStorageFakePromise.js
-  [reactNativeAsyncStorage]: https://github.com/michaelcontento/redux-storage/blob/master/src/engines/reactNativeAsyncStorage.js
+  [localStorage]: https://github.com/michaelcontento/redux-storage-engine-localStorage
+  [localStorageFakePromise]: https://github.com/michaelcontento/redux-storage-engine-localStorageFakePromise
+  [reactNativeAsyncStorage]: https://github.com/michaelcontento/redux-storage-engine-reactNativeAsyncStorage
   [LOAD]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L1
   [SAVE]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L2
-  [debounce]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/debounce.js
-  [filter]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/filter.js
-  [immutablejs]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/immutablejs.js
-  [migrate]: https://github.com/michaelcontento/redux-storage/blob/master/src/decorators/migrate.js
-  [es6-promise]: https://www.npmjs.com/package/es6-promise
+  [debounce]: https://github.com/michaelcontento/redux-storage-decorator-debounce
+  [filter]: https://github.com/michaelcontento/redux-storage-decorator-filter
+  [migrate]: https://github.com/mathieudutour/redux-storage-decorator-migrate
+  [immutablejs]: https://github.com/michaelcontento/redux-storage-decorator-immutablejs

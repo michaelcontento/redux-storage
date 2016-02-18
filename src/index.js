@@ -1,4 +1,3 @@
-export * as decorators from './decorators';
 export { default as createLoader } from './createLoader';
 export { default as createMiddleware } from './createMiddleware';
 export { default as reducer } from './reducer';
@@ -9,6 +8,5 @@ export default {
     ...require('./constants'),
     createLoader: require('./createLoader').default,
     createMiddleware: require('./createMiddleware').default,
-    decorators: require('./decorators'),
     reducer: require('./reducer').default
 };
