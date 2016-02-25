@@ -76,7 +76,16 @@ export default (engine, actionBlacklist = [], actionWhitelist = []) => {
             // Skip blacklisted actions
             if (!isOnBlacklist && isOnWhitelist) {
                 const saveState = getState();
-                const dispatchSave = () => dispatch(actionSave(saveState));
+                const saveAction = actionSave(saveState);
+
+                if (process.env.NODE_ENV !== 'production') {
+                    if (!saveAction.meta) {
+                        saveAction.meta = {};
+                    }
+                    saveAction.meta.origin = action;
+                }
+
+                const dispatchSave = () => dispatch(saveAction);
                 engine.save(saveState).then(dispatchSave).catch(swallow);
             }
 
