@@ -54,7 +54,7 @@ const reducer = storage.reducer(combineReducers(reducers));
 // Now it's time to decide which storage engine should be used
 //
 // Note: The arguments to `createEngine` are different for every engine!
-import createEngine from 'redux-storage-engine-localStorage';
+import createEngine from 'redux-storage-engine-localstorage';
 const engine = createEngine('my-save-key');
 
 // And with the engine we can create our middleware function. The middleware
