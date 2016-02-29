@@ -1,5 +1,3 @@
-import { Map as map } from 'immutable';
-
 import reducer from '../reducer';
 import { LOAD } from '../constants';
 
@@ -14,7 +12,7 @@ describe('reducer', () => {
         spy.should.have.been.calledWith(oldState, action);
     });
 
-    it('should merge newState into oldState', () => {
+    it('should have a default merger in place', () => {
         const spy = sinon.spy();
         const oldState = { x: 0, y: 0 };
         const action = { type: LOAD, payload: { y: 42 } };
@@ -24,97 +22,19 @@ describe('reducer', () => {
         spy.should.have.been.calledWith({ x: 0, y: 42 }, action);
     });
 
-    it('should use mergeDeep on immutable structs', () => {
-        const spy = sinon.spy();
-        const oldState = map({ x: 0, y: 0 });
-        const action = { type: LOAD, payload: { y: 42 } };
-
-        reducer(spy)(oldState, action);
-
-        spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
-    });
-
-    describe('issue #45 - arrays are converted to objects', () => {
-        it('should not convert arrays to objects', () => {
-            const spy = sinon.spy();
-            const oldState = {};
-            const action = { type: LOAD, payload: { arr: [1, 2] } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ arr: [1, 2] }, action);
-        });
-
-        it('should overwrite changed arrays', () => {
-            const spy = sinon.spy();
-            const oldState = { arr: [1, 2] };
-            const action = { type: LOAD, payload: { arr: [3, 4] } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ arr: [3, 4] }, action);
-        });
-    });
-
-    it('should use mergeDeep even if only newState is immutable', () => {
+    it('should allow me to change the merger', () => {
         const spy = sinon.spy();
         const oldState = { x: 0, y: 0 };
-        const action = { type: LOAD, payload: map({ y: 42 }) };
+        const action = { type: LOAD, payload: { y: 42 } };
 
-        reducer(spy)(oldState, action);
+        const merger = (a, b) => {
+            a.should.equal(oldState);
+            b.should.deep.equal({ y: 42 });
+            return { c: 1 };
+        };
 
-        spy.should.have.been.calledWith(map({ x: 0, y: 42 }), action);
-    });
+        reducer(spy, merger)(oldState, action);
 
-    describe('issue #8 - ImmutableJS deprecated warnings', () => {
-        it('should properly merge nested immutables', () => {
-            const spy = sinon.spy();
-            const oldState = { nested: map({ x: 42 }) };
-            const action = { type: LOAD, payload: { nested: { x: 1337 } } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ nested: map({ x: 1337 }) }, action);
-        });
-
-        it('should properly merge nested immutables - switched sides', () => {
-            const spy = sinon.spy();
-            const oldState = { nested: { x: 42 } };
-            const action = { type: LOAD, payload: { nested: map({ x: 1337 }) } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ nested: map({ x: 1337 }) }, action);
-        });
-
-        it('should properly merge nested non-immutable objects', () => {
-            const spy = sinon.spy();
-            const oldState = { nested: { x: 42 } };
-            const action = { type: LOAD, payload: { nested: { x: 1337 } } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ nested: { x: 1337 } }, action);
-        });
-
-        it('should properly merge nested non-objects', () => {
-            const spy = sinon.spy();
-            const oldState = { x: 42 };
-            const action = { type: LOAD, payload: { x: 1337 } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ x: 1337 }, action);
-        });
-
-        it('should properly merge if old state values with null or undefined', () => {
-            const spy = sinon.spy();
-            const oldState = { x: null, y: void(0) };
-            const action = { type: LOAD, payload: { x: 1337, y: 1338 } };
-
-            reducer(spy)(oldState, action);
-
-            spy.should.have.been.calledWith({ x: 1337, y: 1338 }, action);
-        });
+        spy.should.have.been.calledWith({ c: 1 }, action);
     });
 });
