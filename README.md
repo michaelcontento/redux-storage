@@ -39,6 +39,7 @@ And you need to install at least one [redux-storage-engine][npm-engine], as
 
 ```js
 import * as storage from 'redux-storage'
+import { fromJS } from 'immutable'
 
 // Import redux and all your reducers as usual
 import { createStore, applyMiddleware, combineReducers } from 'redux';
@@ -49,7 +50,8 @@ import * as reducers from './reducers';
 //
 // Note: The reducer does nothing special! It just listens for the LOAD
 //       action and merge in the provided state :)
-const reducer = storage.reducer(combineReducers(reducers));
+// Note: fromJS is optional and used only if your state is immutable
+const reducer = storage.reducer(combineReducers(reducers), fromJS);
 
 // Now it's time to decide which storage engine should be used
 //
