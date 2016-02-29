@@ -2,19 +2,26 @@ import createMiddleware from '../createMiddleware';
 import { LOAD, SAVE } from '../constants';
 
 describe('createMiddleware', () => {
+    let oldEnv;
+    beforeEach(() => {
+        oldEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = 'production';
+    });
+
+    afterEach(() => {
+        process.env.NODE_ENV = oldEnv;
+    });
+
     function describeConsoleWarnInNonProduction(msg, cb, msgCheck) {
         describe(msg, () => {
             let warn;
-            let oldEnv;
 
             beforeEach(() => {
-                oldEnv = process.env.NODE_ENV;
                 warn = sinon.stub(console, 'warn');
             });
 
             afterEach(() => {
                 warn.restore();
-                process.env.NODE_ENV = oldEnv;
             });
 
             it('should warn if NODE_ENV != production', () => {
@@ -177,6 +184,27 @@ describe('createMiddleware', () => {
 
         setTimeout(() => {
             const saveAction = { payload: state, type: SAVE };
+            store.dispatch.should.have.been.calledWith(saveAction);
+            done();
+        }, 5);
+    });
+
+    it('should add the parent action as meta.origin to the saveAction', (done) => {
+        process.env.NODE_ENV = 'develop';
+
+        const engine = { save: sinon.stub().resolves() };
+        const state = { x: 42 };
+        const store = {
+            getState: sinon.stub().returns(state),
+            dispatch: sinon.spy()
+        };
+        const next = sinon.spy();
+        const action = { type: 'dummy' };
+
+        createMiddleware(engine)(store)(next)(action);
+
+        setTimeout(() => {
+            const saveAction = { payload: state, type: SAVE, meta: { origin: action } };
             store.dispatch.should.have.been.calledWith(saveAction);
             done();
         }, 5);
