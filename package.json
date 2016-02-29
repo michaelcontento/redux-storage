@@ -50,9 +50,15 @@
     "lodash.isfunction": "^3.0.7",
     "lodash.isobject": "^3.0.2",
     "lodash.merge": "^4.0.2",
+    "loose-envify": "^1.1.0",
     "redux-actions": "^0.9.0"
   },
   "peerDependencies": {
     "redux": "^3.0.0 || ^2.0.0 || ^1.0.0 || 1.0.0-alpha || 1.0.0-rc"
+  },
+  "browserify": {
+    "transform": [
+      "loose-envify"
+    ]
   }
 }
