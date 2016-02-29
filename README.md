@@ -17,6 +17,10 @@ Save and load the [Redux][] state with ease.
     * [localStorage][]: based on window.localStorage
         * Or for environments without `Promise` support [localStorageFakePromise][]
     * [reactNativeAsyncStorage][]: based on `react-native/AsyncStorage`
+* Flexible state merger functions
+    * [simple][merger-simple]: merge plain old JS structures (default)
+    * [immutablejs][merger-immutablejs]: merge plain old JS **and** [Immutable][]
+        objects
 * Storage engines can be async
 * Load and save actions that can be observed
     * [SAVE][]: `{ type: 'REDUX_STORAGE_SAVE', payload: /* state tree */ }`
@@ -49,6 +53,7 @@ import * as reducers from './reducers';
 //
 // Note: The reducer does nothing special! It just listens for the LOAD
 //       action and merge in the provided state :)
+// Note: A cusom merger function can be passed as second argument
 const reducer = storage.reducer(combineReducers(reducers));
 
 // Now it's time to decide which storage engine should be used
@@ -91,12 +96,13 @@ load(store)
 
 ## Details
 
-### Engines & Decorators
+### Engines, Decorators & Mergers
 
-Both are published as own packages on npm. But as a convention all engines share
-the keyword [redux-storage-engine][npm-engine] and decorators can be found with
-[redux-storage-decorator][npm-decorator]. So it's pretty trivial to find all
-the additions to [redux-storage][] you need
+They all are published as own packages on npm. But as a convention all engines
+share the keyword [redux-storage-engine][npm-engine], decorators can be found
+with [redux-storage-decorator][npm-decorator] and mergers with
+[redux-storage-merger][npm-merger]. So it's pretty trivial to find all
+the additions to [redux-storage][] you need :smile:
 
 ### Actions
 
@@ -171,8 +177,11 @@ const middleware = createMiddleware(engine, [], [ SHOULD_SAVE ]);
     IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+  [merger-simple]: https://github.com/michaelcontento/redux-storage-merger-simple
+  [merger-immutablejs]: https://github.com/michaelcontento/redux-storage-merger-immutablejs
   [npm-engine]: https://www.npmjs.com/browse/keyword/redux-storage-engine
   [npm-decorator]: https://www.npmjs.com/browse/keyword/redux-storage-decorator
+  [npm-merger]: https://www.npmjs.com/browse/keyword/redux-storage-merger
   [Redux]: https://github.com/gaearon/redux
   [Immutable]: https://github.com/facebook/immutable-js
   [redux-storage]: https://github.com/michaelcontento/redux-storage
