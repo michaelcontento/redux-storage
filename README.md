@@ -18,7 +18,7 @@ Save and load the [Redux][] state with ease.
         * Or for environments without `Promise` support [localStorageFakePromise][]
     * [reactNativeAsyncStorage][]: based on `react-native/AsyncStorage`
 * Flexible state merger functions
-    * [simple][merger-simple]: merge plain old JS structures
+    * [simple][merger-simple]: merge plain old JS structures (default)
     * [immutablejs][merger-immutablejs]: merge plain old JS **and** [Immutable][]
         objects
 * Storage engines can be async
