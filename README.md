@@ -27,6 +27,7 @@ Save and load the [Redux][] state with ease.
     * [LOAD][]: `{ type: 'REDUX_STORAGE_LOAD', payload: /* state tree */ }`
 * Various engine decorators
     * [debounce][]: batch multiple save operations
+    * [engines][]: use different storage types
     * [filter][]: only store a subset of the whole state tree
     * [immutablejs][]: load parts of the state tree as [Immutable][] objects
     * [migrate][]: versioned storage with migrations
@@ -192,6 +193,7 @@ const middleware = createMiddleware(engine, [], [ SHOULD_SAVE ]);
   [LOAD]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L1
   [SAVE]: https://github.com/michaelcontento/redux-storage/blob/master/src/constants.js#L2
   [debounce]: https://github.com/michaelcontento/redux-storage-decorator-debounce
+  [engines]: https://github.com/allegro/redux-storage-decorator-engines
   [filter]: https://github.com/michaelcontento/redux-storage-decorator-filter
   [migrate]: https://github.com/mathieudutour/redux-storage-decorator-migrate
   [immutablejs]: https://github.com/michaelcontento/redux-storage-decorator-immutablejs
