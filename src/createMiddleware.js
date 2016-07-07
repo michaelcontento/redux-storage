@@ -51,12 +51,20 @@ function isValidAction(action) {
     return false;
 }
 
+function handleWhitelist(action, actionWhitelist) {
+    if (Array.isArray(actionWhitelist)) {
+        // Don't filter if the whitelist is empty
+        return actionWhitelist.length === 0 ? true : actionWhitelist.indexOf(action.type) !== -1;
+    }
+    // actionWhitelist is a function that returns true or false
+    return actionWhitelist(action.type);
+}
 
 export default (engine, actionBlacklist = [], actionWhitelist = []) => {
     // Also don't save if we process our own actions
     const blacklistedActions = [...actionBlacklist, LOAD, SAVE];
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && Array.isArray(actionWhitelist)) {
         warnAboutConfusingFiltering(actionBlacklist, actionWhitelist);
     }
 
@@ -69,9 +77,7 @@ export default (engine, actionBlacklist = [], actionWhitelist = []) => {
             }
 
             const isOnBlacklist = blacklistedActions.indexOf(action.type) !== -1;
-            const isOnWhitelist = actionWhitelist.length === 0
-                ? true // Don't filter if the whitelist is empty
-                : actionWhitelist.indexOf(action.type) !== -1;
+            const isOnWhitelist = handleWhitelist(action, actionWhitelist);
 
             // Skip blacklisted actions
             if (!isOnBlacklist && isOnWhitelist) {

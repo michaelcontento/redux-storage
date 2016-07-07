@@ -96,6 +96,20 @@ describe('createMiddleware', () => {
         engine.save.should.have.been.called;
     });
 
+    it('should allow whitelist function', () => {
+        const engine = { save: sinon.stub().resolves() };
+        const store = { getState: sinon.spy() };
+        const next = sinon.spy();
+        const action = { type: 'ALLOWED' };
+        const whitelistFn = (type) => {
+            return type === 'ALLOWED';
+        };
+
+        createMiddleware(engine, [], whitelistFn)(store)(next)(action);
+
+        engine.save.should.have.been.called;
+    });
+
     describeConsoleWarnInNonProduction(
         'should not process functions',
         () => {
