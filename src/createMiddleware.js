@@ -53,11 +53,13 @@ function isValidAction(action) {
 
 function handleWhitelist(action, actionWhitelist) {
     if (Array.isArray(actionWhitelist)) {
-        // Don't filter if the whitelist is empty
-        return actionWhitelist.length === 0 ? true : actionWhitelist.indexOf(action.type) !== -1;
+        return actionWhitelist.length === 0
+            ? true // Don't filter if the whitelist is empty
+            : actionWhitelist.indexOf(action.type) !== -1;
     }
+
     // actionWhitelist is a function that returns true or false
-    return actionWhitelist(action.type);
+    return actionWhitelist(action);
 }
 
 export default (engine, actionBlacklist = [], actionWhitelist = []) => {

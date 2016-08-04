@@ -101,13 +101,36 @@ describe('createMiddleware', () => {
         const store = { getState: sinon.spy() };
         const next = sinon.spy();
         const action = { type: 'ALLOWED' };
-        const whitelistFn = (type) => {
-            return type === 'ALLOWED';
-        };
+        const whitelistFn = () => true;
 
         createMiddleware(engine, [], whitelistFn)(store)(next)(action);
 
         engine.save.should.have.been.called;
+    });
+
+    it('should ignore actions if the whitelist function returns false', () => {
+        const engine = { save: sinon.stub().resolves() };
+        const store = { getState: sinon.spy() };
+        const next = sinon.spy();
+        const action = { type: 'ALLOWED' };
+        const whitelistFn = () => false;
+
+        createMiddleware(engine, [], whitelistFn)(store)(next)(action);
+
+        engine.save.should.not.have.been.called;
+    });
+
+    it('should pass the whole action to the whitelist function', (done) => {
+        const engine = { save: sinon.stub().resolves() };
+        const store = { getState: sinon.spy() };
+        const next = sinon.spy();
+        const action = { type: 'ALLOWED' };
+        const whitelistFn = (checkAction) => {
+            checkAction.should.deep.equal(action);
+            done();
+        };
+
+        createMiddleware(engine, [], whitelistFn)(store)(next)(action);
     });
 
     describeConsoleWarnInNonProduction(
