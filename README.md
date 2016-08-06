@@ -54,7 +54,7 @@ import * as reducers from './reducers';
 //
 // Note: The reducer does nothing special! It just listens for the LOAD
 //       action and merge in the provided state :)
-// Note: A cusom merger function can be passed as second argument
+// Note: A custom merger function can be passed as second argument
 const reducer = storage.reducer(combineReducers(reducers));
 
 // Now it's time to decide which storage engine should be used
