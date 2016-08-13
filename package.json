@@ -3,7 +3,7 @@
   "version": "4.1.0",
   "description": "Persistence layer for redux with flexible backends",
   "main": "build/index.js",
-  "jsnext:main": "src/index.js",
+  "jsnext:main": "build-es/index.js",
   "scripts": {
     "test": "make lint test build"
   },
@@ -26,6 +26,7 @@
   "author": "Michael Contento <michaelcontento@gmail.com>",
   "files": [
     "build/",
+    "build-es/",
     "src",
     "!**/__tests__/**"
   ],
@@ -37,7 +38,7 @@
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-polyfill": "^6.9.1",
-    "babel-preset-modern-node": "^2.2.1",
+    "babel-preset-modern-node": "^3.0.0",
     "babel-preset-stage-2": "^6.11.0",
     "eslint": "^1.10.3",
     "eslint-config-michaelcontento": "^1.1.1",

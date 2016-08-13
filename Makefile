@@ -30,11 +30,12 @@ mrproper: clean
 
 build: clean install
 	echo "> Building ..."
-	$(BIN)/babel src/ --out-dir build/
+	BABEL_ENV=cjs $(BIN)/babel src/ --out-dir build/
+	BABEL_ENV=es $(BIN)/babel src/ --out-dir build-es/
 
 build-watch: clean install
 	echo "> Building forever ..."
-	$(BIN)/babel src/ --out-dir build/ --watch
+	BABEL_ENV=cjs $(BIN)/babel src/ --out-dir build/ --watch
 
 #
 # TEST

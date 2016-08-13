@@ -1,8 +1,8 @@
 # build artefacts
 /build/
+/build-es/
 
 # npm
 /node_modules/
 /npm-debug.log
 /redux-storage-*.tgz
-
