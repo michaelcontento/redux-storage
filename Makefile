@@ -47,17 +47,18 @@ lint: install
 
 test: install
 	echo "> Testing ..."
-	$(BIN)/mocca
+	BABEL_ENV=cjs $(BIN)/mocca
 
 test-watch: install
 	echo "> Testing forever ..."
-	$(BIN)/mocca --watch
+	BABEL_ENV=cjs $(BIN)/mocca --watch
 
 #
 # PUBLISH
 #
 
 _publish : NODE_ENV ?= production
+_publish : BABEL_ENV=cjs
 _publish: lint test build
 
 publish-fix: _publish
