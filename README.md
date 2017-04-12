@@ -120,7 +120,7 @@ has been restored like this:
 ```js
 import { LOAD, SAVE } from 'redux-storage';
 
-function storeageAwareReducer(state = { loaded: false }, action) {
+function storageAwareReducer(state = { loaded: false }, action) {
     switch (action.type) {
         case LOAD:
             return { ...state, loaded: true };
