@@ -50,7 +50,7 @@
     "lodash.isfunction": "^3.0.8",
     "lodash.isobject": "^3.0.2",
     "loose-envify": "^1.2.0",
-    "redux-actions": "^0.10.1",
+    "redux-actions": "^0.12.0",
     "redux-storage-merger-simple": "^1.0.2"
   },
   "peerDependencies": {
